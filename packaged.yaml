@@ -1,0 +1,167 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'complete
+
+  Sample SAM Template for complete
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Outputs:
+  ArticleAdd:
+    Description: ArticleAdd Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ArticleAdd
+      - Arn
+  ArticleAddApi:
+    Description: API Gateway endpoint URL for production stage for ArticleAdd function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/add
+  ArticleAddIamRole:
+    Description: Implicit IAM Role created for ArticleAdd function
+    Value:
+      Fn::GetAtt:
+      - ArticleAddRole
+      - Arn
+  ArticleDetail:
+    Description: ArticleDetail Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ArticleDetail
+      - Arn
+  ArticleDetailApi:
+    Description: API Gateway endpoint URL for production stage for ArticleAdd function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/add
+  ArticleDetailIamRole:
+    Description: Implicit IAM Role created for ArticleDetail function
+    Value:
+      Fn::GetAtt:
+      - ArticleDetailRole
+      - Arn
+  ArticleEdit:
+    Description: ArticleEdit Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ArticleEdit
+      - Arn
+  ArticleEditApi:
+    Description: API Gateway endpoint URL for production stage for ArticleDetail function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/edit/{id}
+  ArticleEditIamRole:
+    Description: Implicit IAM Role created for ArticleEdit function
+    Value:
+      Fn::GetAtt:
+      - ArticleEdit
+      - Arn
+  ArticleGet:
+    Description: ArticleGet Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ArticleGet
+      - Arn
+  ArticleGetApi:
+    Description: API Gateway endpoint URL for production stage for ArticleGet function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/all
+  ArticleGetIamRole:
+    Description: Implicit IAM Role created for ArticleGet function
+    Value:
+      Fn::GetAtt:
+      - ArticleGetRole
+      - Arn
+  Login:
+    Description: Login Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - Login
+      - Arn
+  LoginApi:
+    Description: API Gateway endpoint URL for production stage for Login function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/login
+  LoginIamRole:
+    Description: Implicit IAM Role created for Login function
+    Value:
+      Fn::GetAtt:
+      - LoginRole
+      - Arn
+Resources:
+  ArticleAdd:
+    Properties:
+      CodeUri: s3://lambadaupload/38bb08df8b813219292e272aa7875c0f
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: post
+            Path: /articles/add
+          Type: Api
+      Handler: index.lambdaHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  ArticleDetail:
+    Properties:
+      CodeUri: s3://lambadaupload/3a15dc5b3bc20b3a1f1da037eada7a05
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: get
+            Path: /articles/{id}
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  ArticleEdit:
+    Properties:
+      CodeUri: s3://lambadaupload/bf28c3bf5c0fb2207256f6d2a50b9c88
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: post
+            Path: /articles/edit/{id}
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  ArticleGet:
+    Properties:
+      CodeUri: s3://lambadaupload/ebe60ae022a9ae1014c733075c832ff9
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: get
+            Path: /articles/all
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  Login:
+    Properties:
+      CodeUri: s3://lambadaupload/a38c5539787c7f9ee58301d9d35efd64
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: post
+            Path: /login
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

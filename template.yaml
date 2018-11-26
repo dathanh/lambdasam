@@ -1,0 +1,160 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    complete
+
+    Sample SAM Template for complete
+    
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 3
+
+
+Resources:
+
+    ArticleAdd:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: mediation-add-article/
+            Handler: index.lambdaHandler
+            Runtime: nodejs8.10
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                HelloWorld:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /articles/add
+                        Method: post
+
+    ArticleDetail:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: meditation-article-detail/
+            Handler: index.handler
+            Runtime: nodejs8.10
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                HelloWorld:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /articles/{id}
+                        Method: get
+
+    ArticleEdit:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: meditation-article-edit/
+            Handler: index.handler
+            Runtime: nodejs8.10
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                HelloWorld:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /articles/edit/{id}
+                        Method: post
+
+    ArticleGet:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: meditation-article-get/
+            Handler: index.handler
+            Runtime: nodejs8.10
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                HelloWorld:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /articles/all
+                        Method: get
+
+    Login:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: meditation-login/
+            Handler: index.handler
+            Runtime: nodejs8.10
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                HelloWorld:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /login
+                        Method: post
+
+
+Outputs:
+
+    ArticleAddApi:
+      Description: "API Gateway endpoint URL for production stage for ArticleAdd function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/add"
+
+    ArticleAdd:
+      Description: "ArticleAdd Lambda Function ARN"
+      Value: !GetAtt ArticleAdd.Arn
+
+    ArticleAddIamRole:
+      Description: "Implicit IAM Role created for ArticleAdd function"
+      Value: !GetAtt ArticleAddRole.Arn
+ 
+    ArticleDetailApi:
+      Description: "API Gateway endpoint URL for production stage for ArticleAdd function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/add"
+
+    ArticleDetail:
+      Description: "ArticleDetail Lambda Function ARN"
+      Value: !GetAtt ArticleDetail.Arn
+
+    ArticleDetailIamRole:
+      Description: "Implicit IAM Role created for ArticleDetail function"
+      Value: !GetAtt ArticleDetailRole.Arn
+ 
+    ArticleEditApi:
+      Description: "API Gateway endpoint URL for production stage for ArticleDetail function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/edit/{id}"
+
+    ArticleEdit:
+      Description: "ArticleEdit Lambda Function ARN"
+      Value: !GetAtt ArticleEdit.Arn
+
+    ArticleEditIamRole:
+      Description: "Implicit IAM Role created for ArticleEdit function"
+      Value: !GetAtt ArticleEdit.Arn
+ 
+    ArticleGetApi:
+      Description: "API Gateway endpoint URL for production stage for ArticleGet function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/all"
+
+    ArticleGet:
+      Description: "ArticleGet Lambda Function ARN"
+      Value: !GetAtt ArticleGet.Arn
+
+    ArticleGetIamRole:
+      Description: "Implicit IAM Role created for ArticleGet function"
+      Value: !GetAtt ArticleGetRole.Arn
+ 
+    LoginApi:
+      Description: "API Gateway endpoint URL for production stage for Login function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/login"
+
+    Login:
+      Description: "Login Lambda Function ARN"
+      Value: !GetAtt Login.Arn
+
+    LoginIamRole:
+      Description: "Implicit IAM Role created for Login function"
+      Value: !GetAtt LoginRole.Arn
+
+ 
+ 
