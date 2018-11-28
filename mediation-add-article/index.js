@@ -9,8 +9,7 @@ const docClient = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = (event, context, callback) => {
-    // let request = event.body;
-    // console.log(event.body);
+    event.body = JSON.parse(event.body);
     let base64string = event.body.base64string;
     let buffer = new Buffer(base64string, 'base64');
     let fileMime = fileType(buffer);
@@ -22,7 +21,13 @@ exports.handler = (event, context, callback) => {
     let params = file.params;
     s3.putObject(params, function(err, dataS3) {
         if (err) {
-            return console.log(err);
+            callback({
+                statusCode: 500,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(err)
+            }, null);
         }
         if (dataS3) {
             var scanningParameters = {
@@ -35,11 +40,15 @@ exports.handler = (event, context, callback) => {
 
             docClient.scan(scanningParameters, (err, reference) => {
                 if (err) {
-                    callback(err, null);
-                }
-                else {
-                    // console.log(JSON.stringify(dataS3));
-                    // callback(null,reference);
+                    callback({
+                        statusCode: 500,
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(err)
+                    }, null);
+                } else {
+
                     var day = dateFormat(Date.now(), "yyyy-mm-dd HH:MM:ss");
                     var params = {
                         TableName: 'ArticlesTable',
@@ -54,12 +63,17 @@ exports.handler = (event, context, callback) => {
                             "updated_date": day,
                         }
                     };
-                    var documentClient = new AWS.DynamoDB.DocumentClient();
-                    documentClient.put(params, function(err, dataArticlesTable) {
-                        if (err) {
-                            return console.log(err);
-                        }
 
+                    docClient.put(params, function(err, dataArticlesTable) {
+                        if (err) {
+                            callback({
+                                statusCode: 500,
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(err)
+                            }, null);
+                        }
                         var paramsReference = {
                             TableName: 'Reference',
                             Key: {
@@ -72,13 +86,29 @@ exports.handler = (event, context, callback) => {
                             },
                             ReturnValues: "UPDATED_NEW"
                         };
-                        var documentClient = new AWS.DynamoDB.DocumentClient();
-                        documentClient.update(paramsReference, function(err, dataReference) {
+
+                        docClient.update(paramsReference, function(err, dataReference) {
                             if (err) {
-                                return console.log(err);
+                                console.log('rhgwjgfjhwegf');
+                                callback({
+                                    statusCode: 500,
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify(err)
+                                }, null);
                             }
-                            callback(null, "succcess");
+                            callback(null, {
+                                statusCode: 200,
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    'status': 'success'
+                                })
+                            });
                         });
+
                     });
                 }
             });
@@ -117,4 +147,3 @@ let getFile = function(fileMime, buffer) {
 
 
 }
-

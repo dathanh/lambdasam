@@ -1,0 +1,19 @@
+{
+  "name": "meditation-article-get",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}

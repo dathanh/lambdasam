@@ -106,7 +106,7 @@ Resources:
     Type: AWS::Serverless::Function
   ArticleDetail:
     Properties:
-      CodeUri: s3://lambadaupload/3a15dc5b3bc20b3a1f1da037eada7a05
+      CodeUri: s3://lambadaupload/e5ad60b2f7ed64fd70f76f001f966a16
       Environment:
         Variables:
           PARAM1: VALUE
@@ -136,7 +136,7 @@ Resources:
     Type: AWS::Serverless::Function
   ArticleGet:
     Properties:
-      CodeUri: s3://lambadaupload/ebe60ae022a9ae1014c733075c832ff9
+      CodeUri: s3://lambadaupload/ea0de53779c353df8cc843ceaf78181a
       Environment:
         Variables:
           PARAM1: VALUE

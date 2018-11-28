@@ -3,12 +3,12 @@ const docClient = new AWS.DynamoDB.DocumentClient({
     region: 'us-east-2'
 });
 exports.handler = (event, context, callback) => {
-
+console.log(JSON.stringify(context));
     var scanningParameters = {
         TableName: 'ArticlesTable',
         Limit: 1,
         Key: {
-            id: parseInt(event.id),
+            id: parseInt(event.pathParameters.id),
         }
 
     };
@@ -19,7 +19,11 @@ exports.handler = (event, context, callback) => {
             callback(err, null);
         }
         else {
-          callback(err, data.Item);
+            callback(null,{
+              statusCode:200,
+              headers: { "Content-Type" : "application/json" },
+              body:JSON.stringify(data.Item)
+          });
         }
     });
 };

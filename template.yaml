@@ -4,11 +4,11 @@ Description: >
     complete
 
     Sample SAM Template for complete
-    
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
     Function:
-        Timeout: 3
+        Timeout: 10
 
 
 Resources:
@@ -17,7 +17,7 @@ Resources:
         Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
         Properties:
             CodeUri: mediation-add-article/
-            Handler: index.lambdaHandler
+            Handler: index.handler
             Runtime: nodejs8.10
             Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
                 Variables:
@@ -107,7 +107,7 @@ Outputs:
     ArticleAddIamRole:
       Description: "Implicit IAM Role created for ArticleAdd function"
       Value: !GetAtt ArticleAddRole.Arn
- 
+
     ArticleDetailApi:
       Description: "API Gateway endpoint URL for production stage for ArticleAdd function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/add"
@@ -119,7 +119,7 @@ Outputs:
     ArticleDetailIamRole:
       Description: "Implicit IAM Role created for ArticleDetail function"
       Value: !GetAtt ArticleDetailRole.Arn
- 
+
     ArticleEditApi:
       Description: "API Gateway endpoint URL for production stage for ArticleDetail function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/edit/{id}"
@@ -131,7 +131,7 @@ Outputs:
     ArticleEditIamRole:
       Description: "Implicit IAM Role created for ArticleEdit function"
       Value: !GetAtt ArticleEdit.Arn
- 
+
     ArticleGetApi:
       Description: "API Gateway endpoint URL for production stage for ArticleGet function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/articles/all"
@@ -143,7 +143,7 @@ Outputs:
     ArticleGetIamRole:
       Description: "Implicit IAM Role created for ArticleGet function"
       Value: !GetAtt ArticleGetRole.Arn
- 
+
     LoginApi:
       Description: "API Gateway endpoint URL for production stage for Login function"
       Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/production/login"
@@ -155,6 +155,3 @@ Outputs:
     LoginIamRole:
       Description: "Implicit IAM Role created for Login function"
       Value: !GetAtt LoginRole.Arn
-
- 
- 
